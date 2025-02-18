@@ -14,34 +14,101 @@ class Human:
         self.satiety = 50
 
     def get_home(self):
-        pass
+        self.home = House()
 
     def get_car(self):
-        pass
+        self.car = Auto(brands_of_car)
 
     def get_job(self):
-        pass
+
+        if self.car.drive():
+            pass
+        else:
+            self.to_repair()
+            return
+
+        self.job = Job(job_list)
 
     def eat(self):
-        pass
+
+        if self.home.food <= 0:
+            self.shopping("food")
+
+        else:
+            if self.satiety >= 100:
+                self.satiety = 100
+                return
+
+            self.satiety += 5
+            self.home.food -= 5
 
     def work(self):
-        pass
+        if self.car.drive():
+            pass
+
+        else:
+
+            if self.car.fuel < 20:
+                self.shopping("fuel")
+                return
+
+            else:
+                self.to_repair()
+
+        self.money += self.job.salary
+        self.gladness -= self.job.gladness_less
+        self.satiety -= 4
 
     def shopping(self, manage):
-        pass
+        if self.car.drive():
+            pass
+
+        else:
+            if self.car.fuel < 20:
+                manage = "fuel"
+
+            else:
+                self.to_repair()
+                return
+
+        if manage == "fuel":
+            print("I bought fuel")
+            self.money -= 100
+            self.car.fuel += 100
+
+        elif manage == "food":
+            print("Bought food")
+            self.money -= 50
+            self.home.food += 50
+
+        elif manage == "delicasies":
+            print("Hooray! delicious!")
+            self.gladness += 10
+            self.satiety += 2
+            self.money -= 15
 
     def chill(self):
-        pass
+        self.gladness += 10
+        self.home.mess += 5
 
     def clean_home(self):
-        pass
+        self.gladness -= 5
+        self.home.mess = 0
 
     def to_repair(self):
-        pass
+        self.car.strength += 100
+        self.money -= 50
 
     def day_info(self, day):
-        pass
+        print(f"Today the {day} of {self.name}'s life")
+        print(f"Money - {self.money}")
+        print(f"Satiety - {self.satiety}")
+        print(f"Gladness - {self.gladness}")
+        print(f"Food in home - {self.home.food}")
+        print(f"Mess in home - {self.home.mess}")
+        print(f"Car fuel - {self.car.fuel}")
+        print(f"Car strength - {self.car.strength}")
+        print("\n")
 
     def is_alive(self):
         pass
@@ -66,13 +133,13 @@ class Auto:
             print("The car cannot move")
             return False
 
+
 brands_of_car = {
     "BMW": {"fuel": 100, "strength": 100, "consumption": 6},
     "Lada": {"fuel": 50, "strength": 40, "consumption": 10},
     "Volvo": {"fuel": 70, "strength": 150, "consumption": 8},
     "Ferrari": {"fuel": 80, "strength": 120, "consumption": 14}
 }
-
 
 
 class House:
@@ -82,15 +149,14 @@ class House:
 
 
 class Job:
-    def __init__(self,job_list):
+    def __init__(self, job_list):
         self.job = choice(list(job_list))
         self.salary = job_list[self.job]["salary"]
         self.gladness_less = job_list[self.job]["gladness_less"]
 
 
-
 job_list = {
-    "Java developer":{"salary":50,"gladness_less":10},
-    "Python developer":{"salary":50,"gladness_less":3},
-    "C++ developer":{"salary":45,"gladness_less":25}
+    "Java developer": {"salary": 50, "gladness_less": 10},
+    "Python developer": {"salary": 50, "gladness_less": 3},
+    "C++ developer": {"salary": 45, "gladness_less": 25}
 }
