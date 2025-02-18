@@ -111,10 +111,80 @@ class Human:
         print("\n")
 
     def is_alive(self):
-        pass
+        if self.gladness < 0:
+            print("Depression..")
+            return False
 
-    def live(self):
-        pass
+        if self.satiety < 0:
+            print("Dead..")
+            return False
+
+        if self.money < -500:
+            print("Bankrupt..")
+            return False
+
+        # if self.home.mess > 50:
+        #     print("Home is Dump")
+        #     return False
+
+    def live(self, day):
+
+        if self.is_alive() == False:
+            return False
+
+        if self.home is None:
+            print("Settled in the house")
+            self.get_home()
+
+        if self.car is None:
+            self.get_car()
+            print(f"I bought a car {self.car.brand}")
+
+        if self.job is None:
+            self.get_job()
+            print(f"i goint to get a job {self.job.job} with salary {self.job.salary}")
+
+        self.day_info(day)
+
+        dice = randint(1, 4)
+
+        if self.satiety < 20:
+            print("I'll go eat")
+            self.eat()
+
+        elif self.gladness < 20:
+            if self.home.mess > 20:
+                print("Oh noo, let's clean and then chill")
+                self.clean_home()
+
+            else:
+                print("Let's chill")
+                self.chill()
+
+        elif self.money < 0:
+            print("Cry..")
+            print("Start working")
+            self.work()
+
+        elif self.car.strength < 15:
+            print("I need to repait my car")
+            self.to_repair()
+
+        elif dice == 1:
+            print("Let's chill")
+            self.chill()
+
+        elif dice == 2:
+            print("Start working")
+            self.work()
+
+        elif dice == 3:
+            print("cleaning home")
+            self.clean_home()
+
+        elif dice == 4:
+            print("Time for treats!")
+            self.shopping(manage="delicacies")
 
 
 class Auto:
@@ -160,3 +230,9 @@ job_list = {
     "Python developer": {"salary": 50, "gladness_less": 3},
     "C++ developer": {"salary": 45, "gladness_less": 25}
 }
+
+nazar = Human("Nazar")
+
+for day in range(1, 8):
+    if nazar.live(day) == False:
+        break
