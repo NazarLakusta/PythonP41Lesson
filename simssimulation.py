@@ -53,9 +53,9 @@ class Human:
 class Auto:
     def __init__(self, brand_list):
         self.brand = choice(list(brand_list))
-        self.fuel = brand_list[self.brand["fuel"]]
-        self.strength = brand_list[self.brand["strength"]]
-        self.consumption = brand_list[self.brand["consumption"]]
+        self.fuel = brand_list[self.brand]["fuel"]
+        self.strength = brand_list[self.brand]["strength"]
+        self.consumption = brand_list[self.brand]["consumption"]
 
     def drive(self):
         if self.strength > 0 and self.fuel >= self.consumption:
@@ -80,3 +80,17 @@ class House:
         self.mess = 0
         self.food = 0
 
+
+class Job:
+    def __init__(self,job_list):
+        self.job = choice(list(job_list))
+        self.salary = job_list[self.job]["salary"]
+        self.gladness_less = job_list[self.job]["gladness_less"]
+
+
+
+job_list = {
+    "Java developer":{"salary":50,"gladness_less":10},
+    "Python developer":{"salary":50,"gladness_less":3},
+    "C++ developer":{"salary":45,"gladness_less":25}
+}
